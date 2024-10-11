@@ -7,21 +7,69 @@
   <Include href="VSGlobals.vsct"/>
 
   <Commands package="Lukextensions">
+    <Menus>
+
+      <Menu guid="Lukextensions" id="RootMenu" priority="0x0624" type="Menu">
+        <Parent guid="Lukextensions" id="RootGroup"/>
+        <Strings>
+          <ButtonText>Lukextensions</ButtonText>
+          <CommandName>Lukextensions</CommandName>
+        </Strings>
+      </Menu>
+      <Menu guid="Lukextensions" id="CommonNamespace" priority="0x0601" type="Menu">
+        <Parent guid="Lukextensions" id="NamespacesGroup"/>
+        <Strings>          
+          <ButtonText>Common</ButtonText>
+          <CommandName>Common</CommandName>
+        </Strings>
+      </Menu>
+    </Menus>
+
     <Groups>
-      <Group guid="Lukextensions" id="MyMenuGroup" priority="0x0600">
+      <Group guid="Lukextensions" id="RootGroup" priority="0x0624">
         <Parent guid="VSMainMenu" id="Tools"/>
+      </Group>
+      <Group guid="Lukextensions" id="NamespacesGroup" priority="0x0601">
+        <Parent guid="Lukextensions" id="RootMenu"/>
+      </Group>
+
+      <Group guid="Lukextensions" id="CommonMenu" priority="0x0601">
+        <Parent guid="Lukextensions" id="CommonNamespace"/>
       </Group>
     </Groups>
 
     <!--This section defines the elements the user can interact with, like a menu command or a button
         or combo box in a toolbar. -->
     <Buttons>
+
+
+      <!--Common-->
+      <Button guid="Common" id="TuppleAliasMapper" priority="0x0102" type="Button">
+        <Parent guid="Lukextensions" id="CommonMenu" />
+              <Icon guid="ImageCatalogGuid" id="TransformListItem" />
+        <CommandFlag>IconIsMoniker</CommandFlag>
+        <Strings>
+          <ButtonText>Map from Tuple Alias</ButtonText>
+          <LocCanonicalName>.Lukextensions.Common.TuppleAliasMapper</LocCanonicalName>
+        </Strings>
+      </Button>
     </Buttons>
   </Commands>
 
   <Symbols>
+
     <GuidSymbol name="Lukextensions" value="{c90157a0-b4ca-4656-a7d9-65bdd192db28}">
-      <IDSymbol name="MyMenuGroup" value="0x0001" />
+      <IDSymbol name="RootGroup" value="0x0001" />
+      <IDSymbol name="RootMenu" value="0x0002" />
+
+      <IDSymbol name="NamespacesGroup" value="0x0100" />
+      <IDSymbol name="CommonMenu" value="0x0101" />
+      <IDSymbol name="CommonNamespace" value="0x0102" />
     </GuidSymbol>
+
+    <GuidSymbol name="Common" value="{014e1fff-1690-49c4-922c-8402d6637357}">
+      <IDSymbol name="TuppleAliasMapper" value="0x006D" />
+    </GuidSymbol>
+
   </Symbols>
 </CommandTable>

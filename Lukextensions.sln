@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{E75D688F-F30
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lukextensions", "src\Lukextensions\Lukextensions.csproj", "{6315C781-66B2-4941-8DA0-78D0EFF48AD4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lukextensions.Common", "src\lib\Lukextensions.Common\Lukextensions.Common.csproj", "{6490F04B-2DE3-4A19-B665-7D3D964FAA6A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lukextensions.Common", "src\lib\Lukextensions.Common\Lukextensions.Common.csproj", "{6490F04B-2DE3-4A19-B665-7D3D964FAA6A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
