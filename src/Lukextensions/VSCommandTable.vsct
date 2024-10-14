@@ -18,9 +18,16 @@
       </Menu>
       <Menu guid="Lukextensions" id="CommonNamespace" priority="0x0601" type="Menu">
         <Parent guid="Lukextensions" id="NamespacesGroup"/>
-        <Strings>          
+        <Strings>
           <ButtonText>Common</ButtonText>
           <CommandName>Common</CommandName>
+        </Strings>
+      </Menu>
+      <Menu guid="Lukextensions" id="CloudRemoverNamespace" priority="0x0602" type="Menu">
+        <Parent guid="Lukextensions" id="NamespacesGroup"/>
+        <Strings>
+          <ButtonText>Cloud remover</ButtonText>
+          <CommandName>Cloud remover</CommandName>
         </Strings>
       </Menu>
     </Menus>
@@ -36,6 +43,10 @@
       <Group guid="Lukextensions" id="CommonMenu" priority="0x0601">
         <Parent guid="Lukextensions" id="CommonNamespace"/>
       </Group>
+
+      <Group guid="Lukextensions" id="CloudRemoverMenu" priority="0x0601">
+        <Parent guid="Lukextensions" id="CloudRemoverNamespace"/>
+      </Group>
     </Groups>
 
     <!--This section defines the elements the user can interact with, like a menu command or a button
@@ -46,11 +57,22 @@
       <!--Common-->
       <Button guid="Common" id="TuppleAliasMapper" priority="0x0102" type="Button">
         <Parent guid="Lukextensions" id="CommonMenu" />
-              <Icon guid="ImageCatalogGuid" id="TransformListItem" />
+        <Icon guid="ImageCatalogGuid" id="TransformListItem" />
         <CommandFlag>IconIsMoniker</CommandFlag>
         <Strings>
           <ButtonText>Map from Tuple Alias</ButtonText>
           <LocCanonicalName>.Lukextensions.Common.TuppleAliasMapper</LocCanonicalName>
+        </Strings>
+      </Button>
+
+      <!--Cloud remover-->
+      <Button guid="CloudRemover" id="RemoveTenants" priority="0x0102" type="Button">
+        <Parent guid="Lukextensions" id="CloudRemoverMenu" />
+        <Icon guid="ImageCatalogGuid" id="CloudError" />
+        <CommandFlag>IconIsMoniker</CommandFlag>
+        <Strings>
+          <ButtonText>Remove Tenants</ButtonText>
+          <LocCanonicalName>.Lukextensions.CloudRemover.RemoveTenants</LocCanonicalName>
         </Strings>
       </Button>
     </Buttons>
@@ -65,10 +87,15 @@
       <IDSymbol name="NamespacesGroup" value="0x0100" />
       <IDSymbol name="CommonMenu" value="0x0101" />
       <IDSymbol name="CommonNamespace" value="0x0102" />
+      <IDSymbol name="CloudRemoverMenu" value="0x0103" />
+      <IDSymbol name="CloudRemoverNamespace" value="0x0104" />
     </GuidSymbol>
 
     <GuidSymbol name="Common" value="{014e1fff-1690-49c4-922c-8402d6637357}">
       <IDSymbol name="TuppleAliasMapper" value="0x006D" />
+    </GuidSymbol>
+    <GuidSymbol name="CloudRemover" value="{77e1278a-4b61-44c7-8b5b-fec628dbb58f}">
+      <IDSymbol name="RemoveTenants" value="0x0074"/>
     </GuidSymbol>
 
   </Symbols>

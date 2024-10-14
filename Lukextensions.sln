@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lukextensions", "src\Lukext
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lukextensions.Common", "src\lib\Lukextensions.Common\Lukextensions.Common.csproj", "{6490F04B-2DE3-4A19-B665-7D3D964FAA6A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lukextensions.CloudRemover", "src\lib\Lukextensions.CloudRemover\Lukextensions.CloudRemover.csproj", "{0F0587E8-418B-456E-9335-0EC5244C62AA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,18 @@ Global
 		{6490F04B-2DE3-4A19-B665-7D3D964FAA6A}.Release|arm64.Build.0 = Release|Any CPU
 		{6490F04B-2DE3-4A19-B665-7D3D964FAA6A}.Release|x86.ActiveCfg = Release|Any CPU
 		{6490F04B-2DE3-4A19-B665-7D3D964FAA6A}.Release|x86.Build.0 = Release|Any CPU
+		{0F0587E8-418B-456E-9335-0EC5244C62AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F0587E8-418B-456E-9335-0EC5244C62AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F0587E8-418B-456E-9335-0EC5244C62AA}.Debug|arm64.ActiveCfg = Debug|Any CPU
+		{0F0587E8-418B-456E-9335-0EC5244C62AA}.Debug|arm64.Build.0 = Debug|Any CPU
+		{0F0587E8-418B-456E-9335-0EC5244C62AA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0F0587E8-418B-456E-9335-0EC5244C62AA}.Debug|x86.Build.0 = Debug|Any CPU
+		{0F0587E8-418B-456E-9335-0EC5244C62AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F0587E8-418B-456E-9335-0EC5244C62AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F0587E8-418B-456E-9335-0EC5244C62AA}.Release|arm64.ActiveCfg = Release|Any CPU
+		{0F0587E8-418B-456E-9335-0EC5244C62AA}.Release|arm64.Build.0 = Release|Any CPU
+		{0F0587E8-418B-456E-9335-0EC5244C62AA}.Release|x86.ActiveCfg = Release|Any CPU
+		{0F0587E8-418B-456E-9335-0EC5244C62AA}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -57,6 +71,7 @@ Global
 		{420ADBDA-71EB-4DCA-AFD6-D920A247E870} = {700D5E7F-CECE-4035-ACBD-CFFF63485013}
 		{6315C781-66B2-4941-8DA0-78D0EFF48AD4} = {700D5E7F-CECE-4035-ACBD-CFFF63485013}
 		{6490F04B-2DE3-4A19-B665-7D3D964FAA6A} = {420ADBDA-71EB-4DCA-AFD6-D920A247E870}
+		{0F0587E8-418B-456E-9335-0EC5244C62AA} = {420ADBDA-71EB-4DCA-AFD6-D920A247E870}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {942A381E-975A-4566-9229-8ED82F639610}

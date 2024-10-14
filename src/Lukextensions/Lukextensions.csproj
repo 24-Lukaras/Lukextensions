@@ -53,6 +53,7 @@
     </ItemGroup>
   </Target>
   <ItemGroup>
+    <Compile Include="CloudRemover\Commands\RemoveTenants.cs" />
     <Compile Include="Common\Commands\TupleAliasMapper.cs" />
     <Compile Include="ExtensionClasses\DocumentViewExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -97,6 +98,10 @@
     <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="17.0.5232" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\lib\Lukextensions.CloudRemover\Lukextensions.CloudRemover.csproj">
+      <Project>{0f0587e8-418b-456e-9335-0ec5244c62aa}</Project>
+      <Name>Lukextensions.CloudRemover</Name>
+    </ProjectReference>
     <ProjectReference Include="..\lib\Lukextensions.Common\Lukextensions.Common.csproj">
       <Project>{6490f04b-2de3-4a19-b665-7d3d964faa6a}</Project>
       <Name>Lukextensions.Common</Name>

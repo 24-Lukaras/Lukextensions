@@ -17,6 +17,9 @@ namespace Lukextensions
 
         public const string CommonString = "014e1fff-1690-49c4-922c-8402d6637357";
         public static Guid Common = new Guid(CommonString);
+
+        public const string CloudRemoverString = "77e1278a-4b61-44c7-8b5b-fec628dbb58f";
+        public static Guid CloudRemover = new Guid(CloudRemoverString);
     }
     /// <summary>
     /// Helper class that encapsulates all CommandIDs uses across VS Package.
@@ -28,6 +31,9 @@ namespace Lukextensions
         public const int NamespacesGroup = 0x0100;
         public const int CommonMenu = 0x0101;
         public const int CommonNamespace = 0x0102;
+        public const int CloudRemoverMenu = 0x0103;
+        public const int CloudRemoverNamespace = 0x0104;
         public const int TuppleAliasMapper = 0x006D;
+        public const int RemoveTenants = 0x0074;
     }
 }
