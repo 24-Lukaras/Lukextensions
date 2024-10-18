@@ -3,10 +3,8 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Collections.Immutable;
 using System.Linq;
-using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Lukextensions.Common
@@ -49,10 +47,53 @@ namespace Lukextensions.Common
             }
 
             newRoot = newRoot.ReplaceNode(mapperClass, modifiedClass);
+
+            newRoot = RegisterRequiredNamespaces(newRoot, methodDefinitions);
+
             newRoot = newRoot.NormalizeWhitespace();
 
             var result = SyntaxFactory.SyntaxTree(newRoot);
             return result.ToString();
-        }     
+        }
+
+        private SyntaxNode RegisterRequiredNamespaces(SyntaxNode root, List<MapperMethodDefinition> mapperDefinitions)
+        {
+            var usings = root.DescendantNodes()
+                .OfType<UsingDirectiveSyntax>()
+                .Where(x => x.Alias is null);
+
+            var usingNamespaces = usings.Select(x => x.NamespaceOrType.ToString())
+                .ToList();
+
+            var firstClass = root.DescendantNodes()
+                .OfType<ClassDeclarationSyntax>()
+                .First();
+
+            List<UsingDirectiveSyntax> usingsToAdd = new List<UsingDirectiveSyntax>();
+            usingsToAdd.AddRange(usings);
+            foreach (var mapperDefinition in mapperDefinitions)
+            {
+                foreach (var requiredNamespace in mapperDefinition.RequiredNamespaces)
+                {                    
+                    if (!usingNamespaces.Contains(requiredNamespace))
+                    {
+                        usingsToAdd.Add(
+                            SyntaxFactory.UsingDirective(
+                                SyntaxFactory.Token(SyntaxKind.UsingKeyword),
+                                SyntaxFactory.Token(SyntaxKind.None),
+                                null,
+                                SyntaxFactory.IdentifierName(requiredNamespace),
+                                SyntaxFactory.Token(SyntaxKind.SemicolonToken))
+                        );
+                        usingNamespaces.Add(requiredNamespace);
+                    }                    
+                }
+            }
+
+            if (usingsToAdd.Count == 0)
+                return root;
+
+            return (root as CompilationUnitSyntax).WithUsings(SyntaxFactory.List<UsingDirectiveSyntax>(usingsToAdd));
+        }
     }
 }
