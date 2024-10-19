@@ -20,6 +20,9 @@ namespace Lukextensions
 
         public const string CloudRemoverString = "77e1278a-4b61-44c7-8b5b-fec628dbb58f";
         public static Guid CloudRemover = new Guid(CloudRemoverString);
+
+        public const string SharepointString = "8270cc16-7d74-4ae5-8719-cf8ed5300b35";
+        public static Guid Sharepoint = new Guid(SharepointString);
     }
     /// <summary>
     /// Helper class that encapsulates all CommandIDs uses across VS Package.
@@ -33,7 +36,11 @@ namespace Lukextensions
         public const int CommonNamespace = 0x0102;
         public const int CloudRemoverMenu = 0x0103;
         public const int CloudRemoverNamespace = 0x0104;
+        public const int SharepointMenu = 0x0105;
+        public const int SharepointNamespace = 0x0106;
         public const int TuppleAliasMapper = 0x006D;
         public const int RemoveTenants = 0x0074;
+        public const int MigrateToSharepoint = 0x006E;
+        public const int OpenSettings = 0x006F;
     }
 }

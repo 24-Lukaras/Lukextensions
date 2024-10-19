@@ -8,7 +8,6 @@
 
   <Commands package="Lukextensions">
     <Menus>
-
       <Menu guid="Lukextensions" id="RootMenu" priority="0x0624" type="Menu">
         <Parent guid="Lukextensions" id="RootGroup"/>
         <Strings>
@@ -30,6 +29,13 @@
           <CommandName>Cloud remover</CommandName>
         </Strings>
       </Menu>
+      <Menu guid="Lukextensions" id="SharepointNamespace" priority="0x0666" type="Menu">
+        <Parent guid="Lukextensions" id="NamespacesGroup"/>
+        <Strings>
+          <ButtonText>Sharepoint</ButtonText>
+          <CommandName>Sharepoint</CommandName>
+        </Strings>
+      </Menu>
     </Menus>
 
     <Groups>
@@ -43,10 +49,13 @@
       <Group guid="Lukextensions" id="CommonMenu" priority="0x0601">
         <Parent guid="Lukextensions" id="CommonNamespace"/>
       </Group>
-
       <Group guid="Lukextensions" id="CloudRemoverMenu" priority="0x0601">
         <Parent guid="Lukextensions" id="CloudRemoverNamespace"/>
       </Group>
+      <Group guid="Lukextensions" id="SharepointMenu" priority="0x0601">
+        <Parent guid="Lukextensions" id="SharepointNamespace"/>
+      </Group>
+
     </Groups>
 
     <!--This section defines the elements the user can interact with, like a menu command or a button
@@ -75,6 +84,27 @@
           <LocCanonicalName>.Lukextensions.CloudRemover.RemoveTenants</LocCanonicalName>
         </Strings>
       </Button>
+
+      <!--Sharepoint-->
+      <Button guid="Sharepoint" id="OpenSettings" priority="0x0001" type="Button">
+        <Parent guid="Lukextensions" id="SharepointMenu" />
+        <Icon guid="ImageCatalogGuid" id="OfficeSharePoint2013Feature" />
+        <CommandFlag>IconIsMoniker</CommandFlag>
+        <Strings>
+          <ButtonText>Open settings</ButtonText>
+          <LocCanonicalName>.Lukextensions.Sharepoint.OpenSettings</LocCanonicalName>
+        </Strings>
+      </Button>
+      <Button guid="Sharepoint" id="MigrateToSharepoint" priority="0x0020" type="Button">
+        <Parent guid="Lukextensions" id="SharepointMenu" />
+        <Icon guid="ImageCatalogGuid" id="UploadDocument" />
+        <CommandFlag>IconIsMoniker</CommandFlag>
+        <Strings>
+          <ButtonText>Migrate to sharepoint</ButtonText>
+          <LocCanonicalName>.Lukextensions.Sharepoint.MigrateToSharepoint</LocCanonicalName>
+        </Strings>
+      </Button>
+
     </Buttons>
   </Commands>
 
@@ -89,6 +119,8 @@
       <IDSymbol name="CommonNamespace" value="0x0102" />
       <IDSymbol name="CloudRemoverMenu" value="0x0103" />
       <IDSymbol name="CloudRemoverNamespace" value="0x0104" />
+      <IDSymbol name="SharepointMenu" value="0x0105" />
+      <IDSymbol name="SharepointNamespace" value="0x0106" />
     </GuidSymbol>
 
     <GuidSymbol name="Common" value="{014e1fff-1690-49c4-922c-8402d6637357}">
@@ -97,6 +129,9 @@
     <GuidSymbol name="CloudRemover" value="{77e1278a-4b61-44c7-8b5b-fec628dbb58f}">
       <IDSymbol name="RemoveTenants" value="0x0074"/>
     </GuidSymbol>
-
+    <GuidSymbol name="Sharepoint" value="{8270cc16-7d74-4ae5-8719-cf8ed5300b35}">
+      <IDSymbol name="MigrateToSharepoint" value="0x006E" />
+      <IDSymbol name="OpenSettings" value="0x006F" />
+    </GuidSymbol>
   </Symbols>
 </CommandTable>

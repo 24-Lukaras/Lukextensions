@@ -55,9 +55,12 @@
   <ItemGroup>
     <Compile Include="CloudRemover\Commands\RemoveTenants.cs" />
     <Compile Include="Common\Commands\TupleAliasMapper.cs" />
-    <Compile Include="ExtensionClasses\DocumentViewExtensions.cs" />
+    <Compile Include="Infrastructure\StaticHelpers\PathProvider.cs" />
+    <Compile Include="Infrastructure\ExtensionClasses\DocumentViewExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LukextensionsPackage.cs" />
+    <Compile Include="Sharepoint\Commands\MigrateToSharepoint.cs" />
+    <Compile Include="Sharepoint\Commands\OpenSettings.cs" />
     <Compile Include="source.extension.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -105,6 +108,10 @@
     <ProjectReference Include="..\lib\Lukextensions.Common\Lukextensions.Common.csproj">
       <Project>{6490f04b-2de3-4a19-b665-7d3d964faa6a}</Project>
       <Name>Lukextensions.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\lib\Lukextensions.SharePoint\Lukextensions.SharePoint.csproj">
+      <Project>{7b117c30-3ef3-4061-8471-4456d4c5732c}</Project>
+      <Name>Lukextensions.SharePoint</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
