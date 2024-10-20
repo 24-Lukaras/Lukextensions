@@ -54,6 +54,7 @@
   </Target>
   <ItemGroup>
     <Compile Include="CloudRemover\Commands\RemoveTenants.cs" />
+    <Compile Include="CloudRemover\Commands\UndoThis.cs" />
     <Compile Include="Common\Commands\TupleAliasMapper.cs" />
     <Compile Include="Infrastructure\StaticHelpers\PathProvider.cs" />
     <Compile Include="Infrastructure\ExtensionClasses\DocumentViewExtensions.cs" />
