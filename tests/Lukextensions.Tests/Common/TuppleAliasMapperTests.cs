@@ -37,4 +37,28 @@ public class TuppleAliasMapperTests
         result.Should().Be(expectedContent);
     }
 
+    [Fact]
+    public async Task TuppleAliasMapper_StudentMapper_ShouldCreateMapperWithInheritedProperties()
+    {
+        // arrange
+        string originalContent;
+        string expectedContent;
+        using (var reader = new StreamReader(Path.Combine(Paths.ExampleProjectRootPath, "Mappers/Book/BookMapper.cs")))
+        {
+            originalContent = await reader.ReadToEndAsync();
+        }
+        using (var reader = new StreamReader(Path.Combine(Paths.ExampleProjectRootPath, "Mappers/Book/Expected.txt")))
+        {
+            expectedContent = await reader.ReadToEndAsync();
+        }
+        var compilationProvider = new RecursiveCompilationProvider(Paths.ExampleProjectRootPath);
+        var mapperBuilder = new MapperBuilder(originalContent, compilationProvider);
+
+        // act
+        var result = await mapperBuilder.Process();
+
+        // assert
+        result.Should().Be(expectedContent);
+    }
+
 }

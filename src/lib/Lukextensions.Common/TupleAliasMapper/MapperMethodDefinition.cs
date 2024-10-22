@@ -4,8 +4,6 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Text;
 
 namespace Lukextensions.Common
 {
@@ -18,7 +16,7 @@ namespace Lukextensions.Common
         public List<PropertyDefinition> Properties { get; set; }
         public HashSet<string> RequiredNamespaces { get; private set; } = new HashSet<string>();
 
-        public MapperMethodDefinition(UsingDirectiveSyntax usingDirective, SemanticModel model)
+        public MapperMethodDefinition(UsingDirectiveSyntax usingDirective, SemanticModel model, CSharpCompilation compliation)
         {
             MethodName = usingDirective.Alias.Name.ToString();
 
@@ -27,20 +25,15 @@ namespace Lukextensions.Common
             SourceType = sourceType.ChildNodes().OfType<IdentifierNameSyntax>().FirstOrDefault()?.Identifier.ValueText;
             TryAddRequiredNamespace(sourceType);
             var sourceInfo = model.GetTypeInfo(sourceType);
-            var gettableProperties = sourceInfo.Type.GetMembers()
-                .OfType<IPropertySymbol>()
-                .Select(x => new PropertyDefinition(x))
-                .ToList();
+            var gettableProperties = new List<PropertyDefinition>();
+            AddPropertiesRecursive(sourceInfo.Type, model, compliation, gettableProperties);
 
             var resultType = tuppleAlias.Elements[1].Type;
             ResultType = resultType.ChildNodes().OfType<IdentifierNameSyntax>().FirstOrDefault()?.Identifier.ValueText;
             TryAddRequiredNamespace(resultType);
             var resultInfo = model.GetTypeInfo(resultType);
-            var settableProperties = resultInfo.Type.GetMembers()
-                .OfType<IPropertySymbol>()
-                .Where(x => x.SetMethod != null)
-                .Select(x => new PropertyDefinition(x))
-                .ToList();
+            var settableProperties = new List<PropertyDefinition>();
+            AddPropertiesRecursive(resultInfo.Type, model, compliation, settableProperties, x => x.SetMethod != null);
 
             Properties = gettableProperties.Intersect(settableProperties, new PropertyDefinitionEqualityComparer()).ToList();
         }
@@ -54,6 +47,37 @@ namespace Lukextensions.Common
             foreach (var qualifiedName in qualifiedNames)
             {
                 RequiredNamespaces.Add(qualifiedName.ToString());
+            }
+        }
+
+        private void AddPropertiesRecursive(ITypeSymbol typeInfo, SemanticModel model, CSharpCompilation compilation, List<PropertyDefinition> coll, Func<IPropertySymbol, bool> predicate = null)
+        {
+            var properties = typeInfo.GetMembers()
+                .OfType<IPropertySymbol>();
+            
+            if (predicate != null)
+            {
+                properties = properties.Where(x => predicate(x));
+            }
+
+            coll.AddRange(properties.Select(x => new PropertyDefinition(x)));
+
+            if (typeInfo.BaseType != null)
+            {
+                var reference = typeInfo.BaseType.DeclaringSyntaxReferences.FirstOrDefault();
+
+                if (reference is null)
+                    return;
+
+                // TODO: remove namespace parent assumption
+                var inheritedClass = reference.GetSyntax() as ClassDeclarationSyntax;
+                var fullyQualifiedName = $"{(inheritedClass.Parent as FileScopedNamespaceDeclarationSyntax).Name}.{inheritedClass.Identifier}";
+                var inheritedType = compilation.GetTypeByMetadataName(fullyQualifiedName);
+
+                if (inheritedType == null)
+                    return;            
+
+                AddPropertiesRecursive(inheritedType, model, compilation, coll, predicate);
             }
         }
 

@@ -32,7 +32,7 @@ namespace Lukextensions.Common
             var compilation = _compilationProvider.GetCompilationWith(new List<SyntaxTree>() { _syntaxTree });
             var model = compilation.GetSemanticModel(_syntaxTree);
 
-            var methodDefinitions = tupleAliases.Select(x => new MapperMethodDefinition(x, model)).ToList();
+            var methodDefinitions = tupleAliases.Select(x => new MapperMethodDefinition(x, model, compilation)).ToList();
 
             var newRoot = root.RemoveNodes(tupleAliases, SyntaxRemoveOptions.KeepNoTrivia);
 

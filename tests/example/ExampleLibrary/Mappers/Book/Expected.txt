@@ -1,0 +1,18 @@
+﻿using ExampleLibrary.Model;
+using ExampleLibrary.ViewModel;
+
+namespace ExampleLibrary.Mappers;
+public static static class BookMapper
+{
+    public static EditBookViewModel ToViewModel(this Book source)
+    {
+        return new EditBookViewModel
+        {
+            Author = source.Author,
+            Id = source.Id,
+            NumberOfPages = source.NumberOfPages,
+            PublishedAt = source.PublishedAt,
+            Title = source.Title
+        };
+    }
+}
