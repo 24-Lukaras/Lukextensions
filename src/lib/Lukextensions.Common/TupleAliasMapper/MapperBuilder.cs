@@ -93,7 +93,7 @@ namespace Lukextensions.Common
             if (usingsToAdd.Count == 0)
                 return root;
 
-            return (root as CompilationUnitSyntax).WithUsings(SyntaxFactory.List<UsingDirectiveSyntax>(usingsToAdd));
+            return (root as CompilationUnitSyntax).WithUsings(SyntaxFactory.List(usingsToAdd.OrderBy(x => x.NamespaceOrType.ToString())));
         }
     }
 }

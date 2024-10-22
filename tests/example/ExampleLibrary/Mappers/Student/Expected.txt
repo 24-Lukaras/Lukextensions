@@ -1,0 +1,17 @@
+﻿using ExampleLibrary.Model;
+using ExampleLibrary.ViewModel;
+
+namespace ExampleLibrary.Mappers;
+public static class StudentMapper
+{
+    public static Student ToStudent(this CreateStudentViewModel source)
+    {
+        return new Student
+        {
+            DateOfBirth = source.DateOfBirth,
+            Email = source.Email,
+            Firstname = source.Firstname,
+            Lastname = source.Lastname
+        };
+    }
+}

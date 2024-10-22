@@ -72,6 +72,7 @@ namespace Lukextensions.Common
                 )
             );
 
+            Properties = Properties.OrderBy(x => x.PropertyName).ToList();
 
             List<SyntaxNodeOrToken> propertyAssignmentList = new List<SyntaxNodeOrToken>();
             for (int i = 0; i < Properties.Count; i++)
