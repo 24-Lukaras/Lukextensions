@@ -17,7 +17,7 @@ namespace Lukextensions.SharePoint.Requests
         {
             if (!string.IsNullOrEmpty(_searchPhrase))
             {
-                return await client.GetAsync($"v1.0/sites/{_siteId}/lists?$search={client}");
+                return await client.GetAsync($"v1.0/sites/{_siteId}/lists?$search={_searchPhrase}");
             }
             return await client.GetAsync($"v1.0/sites/{_siteId}/lists");
         }

@@ -86,7 +86,7 @@
       </Button>
       <Button guid="CloudRemover" id="UndoThis" priority="0x0103" type="Button">
         <Parent guid="Lukextensions" id="CloudRemoverMenu" />
-              <Icon guid="ImageCatalogGuid" id="ErrorSquiggleInactive" />
+        <Icon guid="ImageCatalogGuid" id="ErrorSquiggleInactive" />
         <CommandFlag>IconIsMoniker</CommandFlag>
         <Strings>
           <ButtonText>Undo "this"</ButtonText>
@@ -104,7 +104,16 @@
           <LocCanonicalName>.Lukextensions.Sharepoint.OpenSettings</LocCanonicalName>
         </Strings>
       </Button>
-      <Button guid="Sharepoint" id="MigrateToSharepoint" priority="0x0020" type="Button">
+      <Button guid="Sharepoint" id="MigrateFromSharepoint" priority="0x0099" type="Button">
+        <Parent guid="Lukextensions" id="SharepointMenu" />
+        <Icon guid="ImageCatalogGuid" id="DownloadDocument" />
+        <CommandFlag>IconIsMoniker</CommandFlag>
+        <Strings>
+          <ButtonText>Migrate from sharepoint</ButtonText>
+          <LocCanonicalName>.Lukextensions.Sharepoint.MigrateFromSharepoint</LocCanonicalName>
+        </Strings>
+      </Button>
+      <Button guid="Sharepoint" id="MigrateToSharepoint" priority="0x0100" type="Button">
         <Parent guid="Lukextensions" id="SharepointMenu" />
         <Icon guid="ImageCatalogGuid" id="UploadDocument" />
         <CommandFlag>IconIsMoniker</CommandFlag>
@@ -140,6 +149,7 @@
       <IDSymbol name="UndoThis" value="0x0075"/>
     </GuidSymbol>
     <GuidSymbol name="Sharepoint" value="{8270cc16-7d74-4ae5-8719-cf8ed5300b35}">
+      <IDSymbol name="MigrateFromSharepoint" value="0x0067" />
       <IDSymbol name="MigrateToSharepoint" value="0x006E" />
       <IDSymbol name="OpenSettings" value="0x006F" />
     </GuidSymbol>

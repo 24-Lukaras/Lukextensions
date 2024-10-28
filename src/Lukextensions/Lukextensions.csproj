@@ -60,6 +60,7 @@
     <Compile Include="Infrastructure\ExtensionClasses\DocumentViewExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LukextensionsPackage.cs" />
+    <Compile Include="Sharepoint\Commands\MigrateFromSharepoint.cs" />
     <Compile Include="Sharepoint\Commands\MigrateToSharepoint.cs" />
     <Compile Include="Sharepoint\Commands\OpenSettings.cs" />
     <Compile Include="source.extension.cs">

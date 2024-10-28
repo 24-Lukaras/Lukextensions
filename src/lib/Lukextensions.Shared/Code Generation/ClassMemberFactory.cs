@@ -7,7 +7,7 @@ namespace Lukextensions.Shared
     public static class ClassMemberFactory
     {
 
-        public static MemberDeclarationSyntax StringField(string fieldName, string value = null, bool isPublic = true, bool isConstant = false)
+        public static FieldDeclarationSyntax StringField(string fieldName, string value = null, bool isPublic = true, bool isConstant = false)
         {
             var modifiers = SyntaxFactory.TokenList();
             if (isPublic)
@@ -38,6 +38,24 @@ namespace Lukextensions.Shared
                     )
                 )
             ).WithModifiers(modifiers);
+        }
+
+        public static PropertyDeclarationSyntax Property(string type, string propertyName)
+        {
+            return SyntaxFactory.PropertyDeclaration(
+                attributeLists: SyntaxFactory.List<AttributeListSyntax>(),
+                modifiers: SyntaxFactory.TokenList(SyntaxFactory.Token(SyntaxKind.PublicKeyword)),
+                type: SyntaxFactory.IdentifierName(type),
+                explicitInterfaceSpecifier: null,
+                identifier: SyntaxFactory.Identifier(propertyName),
+                accessorList: SyntaxFactory.AccessorList(
+                    SyntaxFactory.Token(SyntaxKind.OpenBraceToken),
+                    SyntaxFactory.List(new List<AccessorDeclarationSyntax>()
+                    {
+                        SyntaxFactory.AccessorDeclaration(SyntaxKind.GetAccessorDeclaration).WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken)),
+                        SyntaxFactory.AccessorDeclaration(SyntaxKind.SetAccessorDeclaration).WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken))
+                    }),
+                    SyntaxFactory.Token(SyntaxKind.CloseBraceToken)));
         }
     }
 }

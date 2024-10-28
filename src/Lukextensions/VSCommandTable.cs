@@ -41,6 +41,7 @@ namespace Lukextensions
         public const int TuppleAliasMapper = 0x006D;
         public const int RemoveTenants = 0x0074;
         public const int UndoThis = 0x0075;
+        public const int MigrateFromSharepoint = 0x0067;
         public const int MigrateToSharepoint = 0x006E;
         public const int OpenSettings = 0x006F;
     }
