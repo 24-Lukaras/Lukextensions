@@ -1,4 +1,5 @@
-﻿using Lukextensions.SharePoint.Requests;
+﻿using Lukextensions.Shared;
+using Lukextensions.SharePoint.Requests;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -36,7 +37,7 @@ namespace Lukextensions.SharePoint
 
             NewListDefinition listDefinition = new NewListDefinition()
             {
-                DisplayName = @class.Identifier.ToString()
+                DisplayName = TextHelper.PluralizeListName(@class.Identifier.ToString())
             };
 
             foreach (var property in properties)
@@ -56,7 +57,7 @@ namespace Lukextensions.SharePoint
                 {
                     case "string":
                     case "string?":
-                        if (property.GetLeadingTrivia().Any(x => x.IsKind(SyntaxKind.SingleLineCommentTrivia) && x.ToString().Trim() == "//multiline"))
+                        if (property.AttributeLists.ToString() == "[DataType(DataType.MultilineText)]")
                         {
                             listDefinition.Columns.Add(ColumnDefinition.MultilineTextColumn(columnName, required));
                         }
@@ -82,7 +83,14 @@ namespace Lukextensions.SharePoint
 
                     case "DateTime":
                     case "DateTime?":
-                        listDefinition.Columns.Add(ColumnDefinition.DateTimeColumn(columnName, false, required));
+                        if (property.AttributeLists.ToString() == "[DataType(DataType.Date)]")
+                        {
+                            listDefinition.Columns.Add(ColumnDefinition.DateTimeColumn(columnName, true, required));
+                        }
+                        else
+                        {
+                            listDefinition.Columns.Add(ColumnDefinition.DateTimeColumn(columnName, false, required));
+                        }
                         break;
 
                     case "DateOnly":
@@ -102,31 +110,10 @@ namespace Lukextensions.SharePoint
 
             var result = await _client.Request(new CreateListRequest(siteId, listDefinition));
 
-            allMembers = allMembers.InsertRange(0, new List<MemberDeclarationSyntax>() 
+            allMembers = allMembers.InsertRange(0, new List<MemberDeclarationSyntax>()
                 {
-                    SyntaxFactory.FieldDeclaration(
-                        SyntaxFactory.VariableDeclaration(SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.StringKeyword)))
-                            .WithVariables(SyntaxFactory.SeparatedList(
-                                new List<VariableDeclaratorSyntax>() {
-                                    SyntaxFactory.VariableDeclarator("SiteId")
-                                        .WithInitializer(SyntaxFactory.EqualsValueClause(SyntaxFactory.LiteralExpression(SyntaxKind.StringLiteralExpression, SyntaxFactory.Literal(siteId)))
-                                    )
-                                }
-                            )                                                        
-                        )
-                    ).WithModifiers(SyntaxFactory.TokenList(SyntaxFactory.Token(SyntaxKind.PublicKeyword), SyntaxFactory.Token(SyntaxKind.ConstKeyword)))
-                    ,
-                    SyntaxFactory.FieldDeclaration(
-                        SyntaxFactory.VariableDeclaration(SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.StringKeyword)))
-                            .WithVariables(SyntaxFactory.SeparatedList(
-                                new List<VariableDeclaratorSyntax>() {
-                                    SyntaxFactory.VariableDeclarator("ListId")
-                                        .WithInitializer(SyntaxFactory.EqualsValueClause(SyntaxFactory.LiteralExpression(SyntaxKind.StringLiteralExpression, SyntaxFactory.Literal(result.Id)))
-                                    )
-                                }
-                            )
-                        )
-                    ).WithModifiers(SyntaxFactory.TokenList(SyntaxFactory.Token(SyntaxKind.PublicKeyword), SyntaxFactory.Token(SyntaxKind.ConstKeyword)))
+                    ClassMemberFactory.StringField("SiteId", siteId, true, true),
+                    ClassMemberFactory.StringField("ListId", result.Id, true, true)
                 }
             );
 
@@ -136,6 +123,8 @@ namespace Lukextensions.SharePoint
                 .NormalizeWhitespace()
                 .ToString();
         }
+
+        
 
     }
 }
