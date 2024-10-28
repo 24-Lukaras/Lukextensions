@@ -1,6 +1,7 @@
 ﻿using Lukextensions.Common;
 using Lukextensions.SharePoint;
 using System.IO;
+using System.Linq;
 
 namespace Lukextensions.Sharepoint
 {
@@ -21,11 +22,6 @@ namespace Lukextensions.Sharepoint
                 return;
             }
 
-            var doc = await VS.Documents.GetActiveDocumentViewAsync();
-
-            if (!doc.IsCSharpDocument())
-                throw new ArgumentException("File is not a CSharp document");
-
             string settingsContent;
             using (var reader = new StreamReader(path)) 
             {
@@ -33,16 +29,31 @@ namespace Lukextensions.Sharepoint
             }
             var settings = SharepointProjectSettings.FromJson(settingsContent);
             var client = new GraphClient(settings);
-
-            var documentContent = doc.TextBuffer.CurrentSnapshot.GetText();
             var migrator = new CodeFirstMigrator(client);
 
-            var result = await migrator.MigrateAsync(documentContent, settings.SiteId);
+            var documents = await VS.Solutions.GetActiveItemsAsync();
 
-            using (var edit = doc.TextBuffer.CreateEdit())
+            foreach (var activeDocument in documents)
             {
-                edit.Replace(0, doc.TextBuffer.CurrentSnapshot.Length, result);
-                edit.Apply();
+                if (!await VS.Documents.IsOpenAsync(activeDocument.FullPath))
+                {
+                    await VS.Documents.OpenAsync(activeDocument.FullPath);
+                }
+
+                var doc = await VS.Documents.GetDocumentViewAsync(activeDocument.FullPath);
+
+                if (!doc.IsCSharpDocument())
+                    throw new ArgumentException("File is not a CSharp document");
+
+                var documentContent = doc.TextBuffer.CurrentSnapshot.GetText();
+
+                var result = await migrator.MigrateAsync(documentContent, settings.SiteId);
+
+                using (var edit = doc.TextBuffer.CreateEdit())
+                {
+                    edit.Replace(0, doc.TextBuffer.CurrentSnapshot.Length, result);
+                    edit.Apply();
+                }
             }
         }
     }

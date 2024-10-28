@@ -49,36 +49,50 @@ namespace Lukextensions.SharePoint
                 if (!property.AccessorList.Accessors.Any(x => x.IsKind(SyntaxKind.SetAccessorDeclaration)))
                     continue;
 
-                switch (property.Type.ToString())
+                var propertyType = property.Type.ToString();
+                var required = !propertyType.EndsWith("?");
+
+                switch (propertyType)
                 {
                     case "string":
-                        listDefinition.Columns.Add(ColumnDefinition.TextColumn(columnName));
+                    case "string?":
+                        if (property.GetLeadingTrivia().Any(x => x.IsKind(SyntaxKind.SingleLineCommentTrivia) && x.ToString().Trim() == "//multiline"))
+                        {
+                            listDefinition.Columns.Add(ColumnDefinition.MultilineTextColumn(columnName, required));
+                        }
+                        else
+                        {
+                            listDefinition.Columns.Add(ColumnDefinition.TextColumn(columnName, required));
+                        }
                         break;
 
                     case "decimal":
                     case "double":
                     case "float":
-                        listDefinition.Columns.Add(ColumnDefinition.NumberColumn(columnName));
+                    case "decimal?":
+                    case "double?":
+                    case "float?":
+                        listDefinition.Columns.Add(ColumnDefinition.NumberColumn(columnName, required));
                         break;
 
                     case "int":
                     case "int?":
-                        listDefinition.Columns.Add(ColumnDefinition.IntColumn(columnName));
+                        listDefinition.Columns.Add(ColumnDefinition.IntColumn(columnName, required));
                         break;
 
                     case "DateTime":
                     case "DateTime?":
-                        listDefinition.Columns.Add(ColumnDefinition.DateTimeColumn(columnName));
+                        listDefinition.Columns.Add(ColumnDefinition.DateTimeColumn(columnName, false, required));
                         break;
 
                     case "DateOnly":
                     case "DateOnly?":
-                        listDefinition.Columns.Add(ColumnDefinition.DateColumn(columnName));
+                        listDefinition.Columns.Add(ColumnDefinition.DateTimeColumn(columnName, true, required));
                         break;
 
                     case "bool":
                     case "bool?":
-                        listDefinition.Columns.Add(ColumnDefinition.BoolColumn(columnName));
+                        listDefinition.Columns.Add(ColumnDefinition.BoolColumn(columnName, required));
                         break;
 
                     default:
