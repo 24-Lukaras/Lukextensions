@@ -38,6 +38,30 @@ public class TuppleAliasMapperTests
     }
 
     [Fact]
+    public async Task TuppleAliasMapper_StudentMapperWithScopedNamespace_ShouldCreateMapperWhileInheritingProperties()
+    {
+        // arrange
+        string originalContent;
+        string expectedContent;
+        using (var reader = new StreamReader(Path.Combine(Paths.ExampleProjectRootPath, "Mappers/Student/StudentMapperScopedNamespace.cs")))
+        {
+            originalContent = await reader.ReadToEndAsync();
+        }
+        using (var reader = new StreamReader(Path.Combine(Paths.ExampleProjectRootPath, "Mappers/Student/ExpectedScopedNamespace.txt")))
+        {
+            expectedContent = await reader.ReadToEndAsync();
+        }
+        var compilationProvider = new RecursiveCompilationProvider(Paths.ExampleProjectRootPath);
+        var mapperBuilder = new MapperBuilder(originalContent, compilationProvider);
+
+        // act
+        var result = await mapperBuilder.Process();
+
+        // assert
+        result.Should().Be(expectedContent);
+    }
+
+    [Fact]
     public async Task TuppleAliasMapper_StudentMapper_ShouldCreateMapperWithInheritedProperties()
     {
         // arrange

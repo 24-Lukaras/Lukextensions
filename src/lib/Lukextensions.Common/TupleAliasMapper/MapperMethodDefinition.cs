@@ -69,9 +69,22 @@ namespace Lukextensions.Common
                 if (reference is null)
                     return;
 
-                // TODO: remove namespace parent assumption
                 var inheritedClass = reference.GetSyntax() as ClassDeclarationSyntax;
-                var fullyQualifiedName = $"{(inheritedClass.Parent as FileScopedNamespaceDeclarationSyntax).Name}.{inheritedClass.Identifier}";
+                string @namespace = null;
+                SyntaxNode parent = inheritedClass.Parent;
+                while (string.IsNullOrEmpty(@namespace) && parent != null)
+                {
+                    if (parent is BaseNamespaceDeclarationSyntax namespaceDeclaration)
+                    {
+                        @namespace = namespaceDeclaration.Name.ToString();
+                    }
+                    parent = parent.Parent;
+                }
+
+                if (string.IsNullOrEmpty(@namespace))
+                    return;
+
+                var fullyQualifiedName = $"{@namespace}.{inheritedClass.Identifier}";
                 var inheritedType = compilation.GetTypeByMetadataName(fullyQualifiedName);
 
                 if (inheritedType == null)
